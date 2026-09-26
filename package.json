@@ -1,0 +1,35 @@
+{
+  "name": "devdocs-ai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devdocs": "node src/cli/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ARINGIT2025/devdocs-ai.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ARINGIT2025/devdocs-ai/issues"
+  },
+  "homepage": "https://github.com/ARINGIT2025/devdocs-ai#readme",
+  "dependencies": {
+    "@octokit/rest": "^22.0.1",
+    "commander": "^15.0.0",
+    "dotenv": "^18.0.4",
+    "simple-git": "^4.0.1"
+  },
+  "bin": {
+    "devdocs": "src/cli/index.js"
+  }
+}

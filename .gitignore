@@ -4,3 +4,5 @@ __pycache__/
 venv/
 *.log
 docs/api/swagger-ui/
+
+node_modules/

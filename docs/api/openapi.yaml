@@ -1,0 +1,356 @@
+openapi: 3.0.3
+info:
+  title: DevDocs AI Generated API
+  version: 1.0.0
+  description: Auto-generated OpenAPI 3.0 specification from FastAPI source code.
+paths:
+  /health:
+    get:
+      summary: Health Check
+      operationId: get_health_check
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                status: success
+      description: Return system health status.
+      tags:
+      - system
+  /api/v1/items:
+    get:
+      summary: List Items
+      operationId: get_list_items
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemResponse'
+              example:
+              - &id001
+                id: 1
+                name: Alex Mercer
+                description: A detailed description of the entity.
+                price: 29.99
+                is_active: true
+      description: Retrieve items with filtering and pagination.
+      tags:
+      - items
+      parameters:
+      - name: skip
+        in: query
+        required: false
+        schema:
+          type: integer
+          example: 0
+        description: Offset count
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          example: 10
+        description: Limit count
+      - name: q
+        in: query
+        required: false
+        schema:
+          type: string
+          nullable: true
+          example: sample_q
+        description: Search keyword
+    post:
+      summary: Create Item
+      operationId: post_create_item
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemResponse'
+              example: *id001
+      description: Create a new item in the catalog.
+      tags:
+      - items
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemCreate'
+            example: &id002
+              name: Alex Mercer
+              description: A detailed description of the entity.
+              price: 29.99
+              is_active: true
+  /api/v1/items/{item_id}:
+    get:
+      summary: Get Item by ID
+      operationId: get_get_item
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemResponse'
+              example: *id001
+      description: Fetch item by its unique integer identifier.
+      tags:
+      - items
+      parameters:
+      - name: item_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          example: 1
+        description: ID of the item
+    put:
+      summary: Update Item
+      operationId: put_update_item
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ItemResponse'
+              example: *id001
+      description: Update an existing item.
+      tags:
+      - items
+      parameters:
+      - name: item_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ItemCreate'
+            example: *id002
+    delete:
+      summary: Delete Item
+      operationId: delete_delete_item
+      responses:
+        '204':
+          description: No Content
+      description: Remove item from catalog.
+      tags:
+      - items
+      parameters:
+      - name: item_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          example: 1
+  /api/v1/users:
+    get:
+      summary: List all users
+      operationId: get_list_users
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserResponse'
+              example:
+              - &id003
+                id: 1
+                username: alex_dev
+                email: user@example.com
+                full_name: Sample Item
+      description: Retrieve a paginated list of registered users.
+      tags:
+      - users
+      parameters:
+      - name: skip
+        in: query
+        required: false
+        schema:
+          type: integer
+          example: 0
+        description: Offset for pagination
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: integer
+          example: 10
+        description: Number of users to return
+      - name: role
+        in: query
+        required: false
+        schema:
+          type: string
+          nullable: true
+          example: admin
+        description: Filter by user role
+    post:
+      summary: Create a new user
+      operationId: post_create_user
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              example: *id003
+      description: Register a new user account.
+      tags:
+      - users
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+            example: &id004
+              username: alex_dev
+              email: user@example.com
+              full_name: Sample Item
+  /api/v1/users/{user_id}:
+    get:
+      summary: Get user by ID
+      operationId: get_get_user
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+              example: *id003
+      description: Fetch details of a specific user by their numerical ID.
+      tags:
+      - users
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          example: 101
+    delete:
+      summary: Delete user
+      operationId: delete_delete_user
+      responses:
+        '204':
+          description: No Content
+      description: Delete a user account.
+      tags:
+      - users
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: integer
+          example: 101
+components:
+  schemas:
+    ItemCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the item
+          example: Alex Mercer
+        description:
+          type: string
+          nullable: true
+          description: Detailed description
+          example: A detailed description of the entity.
+        price:
+          type: number
+          description: Price in USD
+          example: 29.99
+        is_active:
+          type: boolean
+          description: Whether the item is active
+          example: true
+      required:
+      - name
+      - price
+      example: *id002
+    ItemResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Alex Mercer
+        description:
+          type: string
+          nullable: true
+          example: A detailed description of the entity.
+        price:
+          type: number
+          example: 29.99
+        is_active:
+          type: boolean
+          example: true
+      required:
+      - id
+      - name
+      - price
+      - is_active
+      example: *id001
+    UserCreate:
+      type: object
+      properties:
+        username:
+          type: string
+          example: alex_dev
+        email:
+          type: string
+          example: user@example.com
+        full_name:
+          type: string
+          nullable: true
+          example: Sample Item
+      required:
+      - username
+      - email
+      example: *id004
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        username:
+          type: string
+          example: alex_dev
+        email:
+          type: string
+          example: user@example.com
+        full_name:
+          type: string
+          nullable: true
+          example: Sample Item
+      required:
+      - id
+      - username
+      - email
+      example: *id003
